@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<base href="/">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#F3F5FA" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0A1026" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="favicon.ico" sizes="32x32">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/site.css">
+<title>Fiche d’appel · Decrocho</title>
+<!-- Lien court des SMS envoyés à l'artisan (decrocho.fr/f#<fiche>.<signature>) : ouvre sa fiche dans n8n.
+     La partie après # n'est jamais envoyée au serveur, et les aperçus de lien n'exécutent pas ce script :
+     rien ne s'ouvre ni ne se valide tout seul. -->
+<script>
+(function () {
+  var N8N = 'https://decrocho.app.n8n.cloud'; // même adresse que adresse_n8n dans le nœud Réglages du workflow
+  var m = /^#(rec[A-Za-z0-9]{14})\.([0-9a-f]{20})$/.exec(location.hash);
+  if (m) location.replace(N8N + '/webhook/decrocho-rdv?f=' + m[1] + '&s=' + m[2]);
+  else document.documentElement.className += ' lien-invalide';
+})();
+</script>
+<style>.message-invalide { display: none; } .lien-invalide .message-invalide { display: block; } .lien-invalide .message-attente { display: none; }</style>
+</head>
+<body>
+<main id="contenu">
+<section class="section">
+  <div class="wrap erreur-404">
+    <h1>Fiche d’appel</h1>
+    <p class="lead message-attente">Ouverture de la fiche…</p>
+    <p class="lead message-invalide">Ce lien est incomplet. Rouvrez-le depuis le SMS reçu, en entier, ou écrivez à <a href="mailto:contact@decrocho.fr">contact@decrocho.fr</a>.</p>
+    <noscript><p class="lead">Activez JavaScript pour ouvrir la fiche.</p></noscript>
+  </div>
+</section>
+</main>
+</body>
+</html>
