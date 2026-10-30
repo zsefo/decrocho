@@ -109,10 +109,10 @@
   if (calc) {
     var offres = JSON.parse(calc.getAttribute('data-offres'));
     var appels = doc.getElementById('appels');
-    var duree = doc.getElementById('duree');
+    var visites = doc.getElementById('visites');
     var outMontant = calc.querySelector('[data-montant]');
     var outOffre = calc.querySelector('[data-offre]');
-    var outMinutes = calc.querySelector('[data-minutes]');
+    var outAppels = calc.querySelector('[data-appels]');
     var outDetail = calc.querySelector('[data-detail]');
     var euros = function (x) {
       var cents = Math.round(x * 100);
@@ -126,22 +126,30 @@
       if (!isFinite(v) || v < 0) return 0;
       return Math.min(v, max);
     };
+    var nbAppels = function (n) {
+      return new Intl.NumberFormat('fr-FR').format(n) + (n > 1 ? ' appels' : ' appel');
+    };
     var update = function () {
-      var minutes = Math.round(nombre(appels, 5000) * nombre(duree, 60));
+      var n = Math.round(nombre(appels, 5000));
+      var avecVisites = visites.value === 'oui';
       var lignes = offres.map(function (o) {
-        var extra = Math.max(0, minutes - o.minutes);
-        return { o: o, extra: extra, total: o.prix + extra * o.depassement };
+        var extra = Math.max(0, n - o.appels);
+        return { o: o, extra: extra, total: Math.round((o.prix + extra * o.depassement) * 100) / 100, possible: o.visites || !avecVisites };
       });
-      var best = lignes.reduce(function (a, b) { return b.total < a.total ? b : a; });
+      // à prix égal, la formule qui inclut le plus d'appels
+      var best = lignes.filter(function (l) { return l.possible; }).reduce(function (a, b) {
+        return b.total < a.total || (b.total === a.total && b.o.appels > a.o.appels) ? b : a;
+      });
       outMontant.textContent = euros(best.total);
       outOffre.textContent = best.o.nom;
-      outMinutes.textContent = new Intl.NumberFormat('fr-FR').format(minutes) + (minutes > 1 ? ' minutes' : ' minute');
+      outAppels.textContent = nbAppels(n);
       outDetail.innerHTML = '';
       lignes.forEach(function (l) {
         var li = doc.createElement('li');
         if (l === best) li.className = 'is-best';
+        else if (!l.possible) li.className = 'is-off';
         var a = doc.createElement('span');
-        a.textContent = l.o.nom + (l.extra ? ' (+ ' + new Intl.NumberFormat('fr-FR').format(l.extra) + ' min)' : '');
+        a.textContent = l.o.nom + (!l.possible ? ' (sans visites)' : l.extra ? ' (+ ' + nbAppels(l.extra) + ')' : '');
         var b = doc.createElement('span');
         b.textContent = euros(l.total);
         li.appendChild(a); li.appendChild(b);
@@ -149,7 +157,7 @@
       });
     };
     appels.addEventListener('input', update);
-    duree.addEventListener('input', update);
+    visites.addEventListener('change', update);
     update();
   }
 
