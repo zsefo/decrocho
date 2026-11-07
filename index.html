@@ -128,10 +128,10 @@
   <div class="wrap">
     <div class="prix-bandeau pertes-bandeau">
       <div>
-        <p class="eyebrow">Les appels manqués · exemple d’un plombier</p>
-        <p class="chiffre">≈ 1 080 €<small>perdus par mois</small></p>
-        <p class="muted">Un plombier qui manque 5 appels par semaine, dont 1 sur 4 serait devenu une intervention à 200 € TTC, laisse partir environ 1 080 € de chiffre d’affaires chaque mois, souvent chez un confrère qui a décroché.</p>
-        <p class="pertes-sources">Calcul Decrocho, pas une moyenne mesurée : le nombre d’appels manqués et la part de chantiers sont des hypothèses. 200 € TTC : milieu de la fourchette de 100 à 300 € TTC d’une intervention de plomberie courante (MesDépanneurs.fr, septembre 2026). Aux États-Unis, 14 à 27 % des appels aux entreprises de dépannage restent sans réponse (CallRail, 2025 ; Invoca, 2024) ; il n’existe pas de chiffre équivalent publié pour la France.</p>
+        <p class="eyebrow">Les appels manqués · un artisan d’Aix</p>
+        <p class="chiffre">≈ 13 000 €<small>perdus par mois</small></p>
+        <p class="muted">Un artisan que nous avons rencontré manque environ <strong>8 appels par jour</strong>. Même en rappelant aussitôt, <strong>3 clients sur 8</strong> sont déjà partis chez un confrère. À 200 € l’intervention, sur 5 jours par semaine, cela fait environ 13 000 € de chiffre d’affaires perdu chaque mois.</p>
+        <p class="pertes-sources">Chiffres donnés par cet artisan, pas une moyenne mesurée. 200 € TTC : milieu de la fourchette de 100 à 300 € TTC d’une intervention de plomberie courante (MesDépanneurs.fr, septembre 2026). Votre cas est sans doute différent : faites le calcul ci-dessous.</p>
       </div>
       <a class="btn btn--accent" href="#calcul-pertes">Calculer pour vous<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
     </div>
@@ -139,35 +139,37 @@
       <h2>Calculez combien vous perdez par mois.</h2>
       <p class="lead">Mettez vos chiffres à la place de ceux de l’exemple : le calcul se fait tout seul.</p>
     </div>
-    <div class="calcul" id="calcul-pertes" data-prix-essentiel="89">
+    <div class="calcul" id="calcul-pertes">
       <div class="calcul-form">
         <div class="champ">
-          <label for="manques">Appels que vous ne prenez pas, par semaine</label>
-          <div class="saisie"><input id="manques" type="number" inputmode="numeric" min="0" max="500" step="1" value="5"><span>appels</span></div>
-          <p class="aide">Sur le chantier, au volant, déjà en ligne, le soir.</p>
+          <label for="manques">Appels que vous ne prenez pas, par jour</label>
+          <div class="saisie"><input id="manques" type="number" inputmode="numeric" min="0" max="200" step="1" value="8"><span>appels</span></div>
+          <p class="aide">Sur le chantier, au volant, déjà en ligne.</p>
         </div>
         <div class="champ">
-          <label for="chantiers">Sur 10 de ces appels, combien deviendraient un chantier ?</label>
-          <div class="saisie"><input id="chantiers" type="number" inputmode="decimal" min="0" max="10" step="0.5" value="2.5"><span>sur 10</span></div>
-          <p class="aide">Les autres : démarchage, simple question, mauvais numéro.</p>
+          <label for="perdus">Parmi eux, clients qui vont voir ailleurs</label>
+          <div class="saisie"><input id="perdus" type="number" inputmode="numeric" min="0" max="200" step="1" value="3"><span>par jour</span></div>
+          <p class="aide">Ceux qui ne décrochent plus ou ont déjà trouvé quelqu’un quand vous rappelez.</p>
         </div>
         <div class="champ">
-          <label for="montant">Montant moyen d’un chantier</label>
+          <label for="montant">Montant moyen d’une intervention</label>
           <div class="saisie"><input id="montant" type="number" inputmode="numeric" min="0" max="100000" step="10" value="200"><span>€</span></div>
-          <p class="aide">Ce que vous facturez en moyenne pour une intervention.</p>
+        </div>
+        <div class="champ">
+          <label for="jours">Jours travaillés par semaine</label>
+          <div class="saisie"><input id="jours" type="number" inputmode="numeric" min="1" max="7" step="1" value="5"><span>jours</span></div>
         </div>
         <p class="calcul-exemple">Les valeurs de départ sont celles de l’exemple, pas des moyennes constatées : remplacez-les par les vôtres.</p>
       </div>
       <div class="calcul-resultat" aria-live="polite">
         <p class="eyebrow">Ce que vous perdez, environ</p>
-        <p class="calcul-montant" data-pertes-mois>1 083 €</p>
-        <p>par mois, soit <strong data-pertes-an>12 996 €</strong> par an.</p>
+        <p class="calcul-montant" data-pertes-mois>13 000 €</p>
+        <p>par mois, soit <strong data-pertes-an>156 000 €</strong> par an.</p>
         <ul class="calcul-detail">
-          <li><span>Appels manqués par mois</span><span data-pertes-appels>22</span></li>
-          <li><span>Chantiers en jeu par mois</span><span data-pertes-chantiers>5,4</span></li>
-          <li><span>Formule Essentiel</span><span>89 € HT / mois</span></li>
+          <li><span>Appels manqués par mois</span><span data-pertes-appels>173</span></li>
+          <li><span>Clients perdus par mois</span><span data-pertes-perdus>65</span></li>
         </ul>
-        <p class="calcul-note">C’est un ordre de grandeur : certains clients rappellent ou laissent un message. Pendant le mois d’essai, vous voyez combien d’appels l’assistant prend vraiment.</p>
+        <p class="calcul-note">C’est un ordre de grandeur. Pendant le mois d’essai, vous voyez combien d’appels l’assistant prend vraiment.</p>
       </div>
     </div>
   </div>

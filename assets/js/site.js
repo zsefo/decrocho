@@ -177,15 +177,16 @@
     };
     var sortie = function (nom) { return pertes.querySelector('[data-pertes-' + nom + ']'); };
     var majPertes = function () {
-      var appelsMois = champ('manques', 500) * 52 / 12;
-      var chantiersMois = appelsMois * champ('chantiers', 10) / 10;
-      var montantMois = chantiersMois * champ('montant', 100000);
+      var joursMois = Math.max(1, champ('jours', 7)) * 52 / 12;
+      var manques = champ('manques', 200);
+      var perdusMois = Math.min(champ('perdus', 200), manques) * joursMois;
+      var montantMois = perdusMois * champ('montant', 100000);
       sortie('mois').textContent = eur(montantMois);
       sortie('an').textContent = eur(Math.round(montantMois) * 12);
-      sortie('appels').textContent = fr(appelsMois, 0);
-      sortie('chantiers').textContent = fr(chantiersMois, 1);
+      sortie('appels').textContent = fr(manques * joursMois, 0);
+      sortie('perdus').textContent = fr(perdusMois, 0);
     };
-    ['manques', 'chantiers', 'montant'].forEach(function (id) {
+    ['manques', 'perdus', 'montant', 'jours'].forEach(function (id) {
       doc.getElementById(id).addEventListener('input', majPertes);
     });
     majPertes();
