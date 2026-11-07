@@ -161,32 +161,27 @@
     update();
   }
 
-  /* 4 bis. Calculateur des appels manqués (valeurs saisies par l'artisan) */
+  /* 4 bis. Calculateur des appels manqués : appels ratés par mois × part de clients perdus × montant moyen */
   var pertes = doc.getElementById('calcul-pertes');
   if (pertes) {
-    var champ = function (id, max) {
+    var part = parseFloat(pertes.getAttribute('data-part')) || 0;
+    var lirePertes = function (id, max) {
       var v = parseFloat(String(doc.getElementById(id).value).replace(',', '.'));
       if (!isFinite(v) || v < 0) return 0;
       return Math.min(v, max);
     };
-    var fr = function (x, dec) {
-      return new Intl.NumberFormat('fr-FR', { minimumFractionDigits: dec, maximumFractionDigits: dec }).format(x);
-    };
-    var eur = function (x) {
-      return new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(Math.round(x));
+    var nombreFr = function (x) {
+      return new Intl.NumberFormat('fr-FR', { maximumFractionDigits: 0 }).format(Math.round(x));
     };
     var sortie = function (nom) { return pertes.querySelector('[data-pertes-' + nom + ']'); };
     var majPertes = function () {
-      var joursMois = Math.max(1, champ('jours', 7)) * 52 / 12;
-      var manques = champ('manques', 200);
-      var perdusMois = Math.min(champ('perdus', 200), manques) * joursMois;
-      var montantMois = perdusMois * champ('montant', 100000);
-      sortie('mois').textContent = eur(montantMois);
-      sortie('an').textContent = eur(Math.round(montantMois) * 12);
-      sortie('appels').textContent = fr(manques * joursMois, 0);
-      sortie('perdus').textContent = fr(perdusMois, 0);
+      var manques = lirePertes('manques', 5000);
+      var montant = lirePertes('montant', 100000);
+      sortie('mois').textContent = nombreFr(manques * part * montant) + '\u00a0€';
+      sortie('appels').textContent = nombreFr(manques);
+      sortie('montant').textContent = nombreFr(montant) + '\u00a0€';
     };
-    ['manques', 'perdus', 'montant', 'jours'].forEach(function (id) {
+    ['manques', 'montant'].forEach(function (id) {
       doc.getElementById(id).addEventListener('input', majPertes);
     });
     majPertes();
