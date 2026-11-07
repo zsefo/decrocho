@@ -59,6 +59,7 @@
         <a class="btn" href="contact.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6.2 3.5h3l1.7 4.3-2.2 1.5a11.5 11.5 0 0 0 6 6l1.5-2.2 4.3 1.7v3a1.8 1.8 0 0 1-1.9 1.8C10.4 19.1 4.9 13.6 4.4 5.4a1.8 1.8 0 0 1 1.8-1.9z"/></svg>Être rappelé</a>
         <a class="btn btn--line" href="fonctionnement.html">Voir comment ça marche</a>
       </div>
+      <p class="hero-demo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6.2 3.5h3l1.7 4.3-2.2 1.5a11.5 11.5 0 0 0 6 6l1.5-2.2 4.3 1.7v3a1.8 1.8 0 0 1-1.9 1.8C10.4 19.1 4.9 13.6 4.4 5.4a1.8 1.8 0 0 1 1.8-1.9z"/></svg><span>Ou essayez l’assistant tout de suite : <a class="tel-demo" href="tel:+33423490990">04 23 49 09 90</a></span></p>
       <ul class="hero-points">
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Vous gardez votre numéro</li>
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Un mois d’essai offert</li>
@@ -117,23 +118,73 @@
       <article class="atout">
         <span class="atout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5.5 4h13A1.5 1.5 0 0 1 20 5.5v9a1.5 1.5 0 0 1-1.5 1.5H10l-4 3.5V16h-.5A1.5 1.5 0 0 1 4 14.5v-9A1.5 1.5 0 0 1 5.5 4z"/><path d="M8 8.5h8M8 11.5h5"/></svg></span>
         <h3>Une fiche claire par SMS</h3>
-        <p>Nom, numéro, commune, besoin, urgence et créneau tiennent en un message. Vous rappelez quand vous avez les mains libres.</p>
+        <p>Nom, numéro, adresse vérifiée, besoin, urgence et créneau tiennent en un message. Vous rappelez quand vous avez les mains libres.</p>
       </article>
     </div>
   </div>
 </section>
 
-<section class="section">
+<section class="section" id="appels-manques">
+  <div class="wrap">
+    <div class="prix-bandeau pertes-bandeau">
+      <div>
+        <p class="eyebrow">Les appels manqués · exemple d’un plombier</p>
+        <p class="chiffre">≈ 1 080 €<small>perdus par mois</small></p>
+        <p class="muted">Un plombier qui manque 5 appels par semaine, dont 1 sur 4 serait devenu une intervention à 200 € TTC, laisse partir environ 1 080 € de chiffre d’affaires chaque mois, souvent chez un confrère qui a décroché.</p>
+        <p class="pertes-sources">Calcul Decrocho, pas une moyenne mesurée : le nombre d’appels manqués et la part de chantiers sont des hypothèses. 200 € TTC : milieu de la fourchette de 100 à 300 € TTC d’une intervention de plomberie courante (MesDépanneurs.fr, septembre 2026). Aux États-Unis, 14 à 27 % des appels aux entreprises de dépannage restent sans réponse (CallRail, 2025 ; Invoca, 2024) ; il n’existe pas de chiffre équivalent publié pour la France.</p>
+      </div>
+      <a class="btn btn--accent" href="#calcul-pertes">Calculer pour vous<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </div>
+    <div class="section-head pertes-titre">
+      <h2>Calculez combien vous perdez par mois.</h2>
+      <p class="lead">Mettez vos chiffres à la place de ceux de l’exemple : le calcul se fait tout seul.</p>
+    </div>
+    <div class="calcul" id="calcul-pertes" data-prix-essentiel="89">
+      <div class="calcul-form">
+        <div class="champ">
+          <label for="manques">Appels que vous ne prenez pas, par semaine</label>
+          <div class="saisie"><input id="manques" type="number" inputmode="numeric" min="0" max="500" step="1" value="5"><span>appels</span></div>
+          <p class="aide">Sur le chantier, au volant, déjà en ligne, le soir.</p>
+        </div>
+        <div class="champ">
+          <label for="chantiers">Sur 10 de ces appels, combien deviendraient un chantier ?</label>
+          <div class="saisie"><input id="chantiers" type="number" inputmode="decimal" min="0" max="10" step="0.5" value="2.5"><span>sur 10</span></div>
+          <p class="aide">Les autres : démarchage, simple question, mauvais numéro.</p>
+        </div>
+        <div class="champ">
+          <label for="montant">Montant moyen d’un chantier</label>
+          <div class="saisie"><input id="montant" type="number" inputmode="numeric" min="0" max="100000" step="10" value="200"><span>€</span></div>
+          <p class="aide">Ce que vous facturez en moyenne pour une intervention.</p>
+        </div>
+        <p class="calcul-exemple">Les valeurs de départ sont celles de l’exemple, pas des moyennes constatées : remplacez-les par les vôtres.</p>
+      </div>
+      <div class="calcul-resultat" aria-live="polite">
+        <p class="eyebrow">Ce que vous perdez, environ</p>
+        <p class="calcul-montant" data-pertes-mois>1 083 €</p>
+        <p>par mois, soit <strong data-pertes-an>12 996 €</strong> par an.</p>
+        <ul class="calcul-detail">
+          <li><span>Appels manqués par mois</span><span data-pertes-appels>22</span></li>
+          <li><span>Chantiers en jeu par mois</span><span data-pertes-chantiers>5,4</span></li>
+          <li><span>Formule Essentiel</span><span>89 € HT / mois</span></li>
+        </ul>
+        <p class="calcul-note">C’est un ordre de grandeur : certains clients rappellent ou laissent un message. Pendant le mois d’essai, vous voyez combien d’appels l’assistant prend vraiment.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--surface">
   <div class="wrap">
     <div class="section-head">
       <p class="eyebrow">Le parcours d’un appel</p>
-      <h2>De la sonnerie à la fiche, en six étapes.</h2>
+      <h2>De la sonnerie à la fiche, en sept étapes.</h2>
       <p class="lead">Tout est réglé avec vous à la mise en service : le nom de votre entreprise, vos critères d’urgence, vos plages de rendez-vous.</p>
     </div>
     <ol class="parcours">
       <li><h3>Vous ne décrochez pas</h3><p>Pas de réponse, déjà en ligne ou téléphone éteint : l’appel est renvoyé vers Decrocho. Vous gardez votre numéro.</p></li>
       <li><h3>L’assistant se présente</h3><p>Il répond au nom de votre entreprise, dit qu’il est un assistant automatisé et propose à tout moment de parler à quelqu’un.</p></li>
       <li><h3>Il comprend le besoin</h3><p>Une question à la fois : ce qui se passe, l’urgence, l’adresse si un déplacement est utile, puis le nom et le numéro.</p></li>
+      <li><h3>Il vérifie l’adresse</h3><p>Dans la base officielle des adresses françaises, pendant l’appel. Rue mal comprise ? Il relit la bonne orthographe ou fait épeler.</p></li>
       <li><h3>Il classe l’urgence</h3><p>Danger, urgent, normal ou non urgent, sur des faits. En cas de danger, il renvoie d’abord vers le 112.</p></li>
       <li><h3>Il propose une visite, si vous l’avez choisi</h3><p>Avec les formules Confort et Intensif, seulement dans les plages que vous avez ouvertes. Le rendez-vous reste « à confirmer » jusqu’à votre accord.</p></li>
       <li><h3>Vous recevez la fiche</h3><p>Par SMS, avec les liens Confirmer et Refuser s’il y a une visite. Votre client reçoit un SMS de confirmation.</p></li>
@@ -142,7 +193,26 @@
   </div>
 </section>
 
-<section class="section section--surface">
+<section class="section section--tight" id="demo">
+  <div class="wrap">
+    <div class="service demo">
+      <div class="prose">
+        <p class="eyebrow">Essayez-le maintenant</p>
+        <h2>Appelez l’assistant, comme le ferait un de vos clients.</h2>
+        <p class="muted">Vous tombez sur l’assistant de <strong>Plomberie Martin</strong>, une entreprise de plomberie fictive. Jouez un client : une fuite qui ne s’arrête pas, un devis pour une chaudière, une question de prix. Donnez une vraie rue d’Aix, par exemple 12 cours Mirabeau, et écoutez-le vérifier l’adresse.</p>
+        <p class="muted">La visite proposée est fictive : personne ne viendra. L’appel sert seulement à la démonstration ; vos données sont traitées comme indiqué sur la page <a href="confidentialite.html">Confidentialité</a>.</p>
+      </div>
+      <div class="demo-numero">
+        <small>Numéro de démonstration</small>
+        <p class="montant"><a href="tel:+33423490990">04 23 49 09 90</a></p>
+        <a class="btn btn--accent" href="tel:+33423490990"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6.2 3.5h3l1.7 4.3-2.2 1.5a11.5 11.5 0 0 0 6 6l1.5-2.2 4.3 1.7v3a1.8 1.8 0 0 1-1.9 1.8C10.4 19.1 4.9 13.6 4.4 5.4a1.8 1.8 0 0 1 1.8-1.9z"/></svg>Appeler la démo</a>
+        <small>Prix d’un appel vers un fixe, selon votre forfait.</small>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
   <div class="wrap">
     <div class="section-head">
       <p class="eyebrow">Le tri des urgences</p>

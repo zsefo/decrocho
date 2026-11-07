@@ -161,6 +161,36 @@
     update();
   }
 
+  /* 4 bis. Calculateur des appels manqués (valeurs saisies par l'artisan) */
+  var pertes = doc.getElementById('calcul-pertes');
+  if (pertes) {
+    var champ = function (id, max) {
+      var v = parseFloat(String(doc.getElementById(id).value).replace(',', '.'));
+      if (!isFinite(v) || v < 0) return 0;
+      return Math.min(v, max);
+    };
+    var fr = function (x, dec) {
+      return new Intl.NumberFormat('fr-FR', { minimumFractionDigits: dec, maximumFractionDigits: dec }).format(x);
+    };
+    var eur = function (x) {
+      return new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(Math.round(x));
+    };
+    var sortie = function (nom) { return pertes.querySelector('[data-pertes-' + nom + ']'); };
+    var majPertes = function () {
+      var appelsMois = champ('manques', 500) * 52 / 12;
+      var chantiersMois = appelsMois * champ('chantiers', 10) / 10;
+      var montantMois = chantiersMois * champ('montant', 100000);
+      sortie('mois').textContent = eur(montantMois);
+      sortie('an').textContent = eur(Math.round(montantMois) * 12);
+      sortie('appels').textContent = fr(appelsMois, 0);
+      sortie('chantiers').textContent = fr(chantiersMois, 1);
+    };
+    ['manques', 'chantiers', 'montant'].forEach(function (id) {
+      doc.getElementById(id).addEventListener('input', majPertes);
+    });
+    majPertes();
+  }
+
   /* 5. Copier un texte */
   var copier = function (texte) {
     if (navigator.clipboard && window.isSecureContext) {
