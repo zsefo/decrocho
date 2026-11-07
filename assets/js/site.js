@@ -161,10 +161,11 @@
     update();
   }
 
-  /* 4 bis. Calculateur des appels manqués : appels ratés par mois × part de clients perdus × montant moyen */
+  /* 4 bis. Calculateur des appels manqués : appels ratés par jour × jours travaillés par mois × part de clients perdus × montant moyen */
   var pertes = doc.getElementById('calcul-pertes');
   if (pertes) {
     var part = parseFloat(pertes.getAttribute('data-part')) || 0;
+    var joursMois = parseFloat(pertes.getAttribute('data-jours')) || 0;
     var lirePertes = function (id, max) {
       var v = parseFloat(String(doc.getElementById(id).value).replace(',', '.'));
       if (!isFinite(v) || v < 0) return 0;
@@ -175,9 +176,16 @@
     };
     var sortie = function (nom) { return pertes.querySelector('[data-pertes-' + nom + ']'); };
     var majPertes = function () {
-      var manques = lirePertes('manques', 5000);
+      var manques = lirePertes('manques', 200);
       var montant = lirePertes('montant', 100000);
-      sortie('mois').textContent = nombreFr(manques * part * montant) + '\u00a0€';
+      var total = nombreFr(manques * joursMois * part * montant) + '\u00a0€';
+      var cible = sortie('mois');
+      if (cible.textContent !== total) {
+        cible.textContent = total;
+        cible.classList.remove('maj');
+        void cible.offsetWidth; // relance l'animation de rebond
+        cible.classList.add('maj');
+      }
       sortie('appels').textContent = nombreFr(manques);
       sortie('montant').textContent = nombreFr(montant) + '\u00a0€';
     };
@@ -292,6 +300,76 @@
       panneau.hidden = false;
       panneau.focus();
       try { window.location.href = href; } catch (err) { /* la messagerie ne s'ouvre pas : le texte reste à copier */ }
+    });
+  }
+
+  /* 7 bis. Téléphone de l'accueil : date et heure du visiteur ; les fiches gardent leur écart avec l'heure de l'écran */
+  var horloge = doc.querySelector('[data-horloge]');
+  if (horloge) {
+    var deux = function (n) { return (n < 10 ? '0' : '') + n; };
+    var hm = function (d) { return deux(d.getHours()) + ':' + deux(d.getMinutes()); };
+    var enFr = function (d, opts) {
+      try { return new Intl.DateTimeFormat('fr-FR', opts).format(d); } catch (err) { return ''; }
+    };
+    var majHorloge = function () {
+      var maintenant = new Date();
+      var jour = enFr(maintenant, { weekday: 'long' });
+      var mois = enFr(maintenant, { month: 'long' });
+      if (jour && mois) {
+        var quantieme = maintenant.getDate() === 1 ? '1er' : String(maintenant.getDate());
+        horloge.querySelector('[data-horloge-date]').textContent = jour + ' ' + quantieme + ' ' + mois;
+      }
+      horloge.querySelector('[data-horloge-heure]').textContent = hm(maintenant);
+      toArray(doc.querySelectorAll('[data-il-y-a]')).forEach(function (el) {
+        var ecart = parseInt(el.getAttribute('data-il-y-a'), 10) || 0;
+        el.textContent = hm(new Date(maintenant.getTime() - ecart * 60000));
+      });
+      // La visite proposée : deux jours plus tard, jamais un samedi ni un dimanche
+      var visite = new Date(maintenant.getTime());
+      visite.setDate(visite.getDate() + 2);
+      while (visite.getDay() === 0 || visite.getDay() === 6) visite.setDate(visite.getDate() + 1);
+      var nomVisite = enFr(visite, { weekday: 'long' });
+      if (nomVisite) {
+        toArray(doc.querySelectorAll('[data-jour-visite]')).forEach(function (el) {
+          el.textContent = nomVisite.charAt(0).toUpperCase() + nomVisite.slice(1);
+        });
+      }
+    };
+    majHorloge();
+    window.setTimeout(function () {
+      majHorloge();
+      window.setInterval(majHorloge, 60000);
+    }, (60 - new Date().getSeconds()) * 1000 + 50);
+  }
+
+  /* 7 ter. Les blocs apparaissent quand on arrive dessus. Rien pour ceux déjà à l'écran,
+     rien si le visiteur a demandé moins d'animations, rien sans IntersectionObserver. */
+  var moinsDeMouvement = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!moinsDeMouvement && 'IntersectionObserver' in window) {
+    var selecteurs = '.section-head, .duel-carte, .calcul, .scenario, .demo-numero, .ticket, .garanties, .offre, '
+      + '.local-visuel, .etapes-locales > li, .regles > *, details.q, .panneau, .etape, .chapitre, .metier-col, .bande, .coord-carte';
+    var hauteur = window.innerHeight || doc.documentElement.clientHeight;
+    var blocs = toArray(doc.querySelectorAll(selecteurs)).filter(function (el) {
+      return !el.closest('.hero, .site-header, .site-footer, [hidden]') && el.getBoundingClientRect().top > hauteur;
+    });
+    var montrer = function (el) {
+      el.classList.add('vu');
+      window.setTimeout(function () {
+        el.classList.remove('apparait', 'vu');
+        el.style.transitionDelay = '';
+      }, 900 + (parseInt(el.style.transitionDelay, 10) || 0));
+    };
+    var observateur = new IntersectionObserver(function (entrees) {
+      var visibles = entrees.filter(function (en) { return en.isIntersecting; });
+      visibles.forEach(function (en, i) {
+        en.target.style.transitionDelay = Math.min(i, 4) * 90 + 'ms';
+        observateur.unobserve(en.target);
+        montrer(en.target);
+      });
+    }, { rootMargin: '0px 0px -8% 0px' });
+    blocs.forEach(function (el) {
+      el.classList.add('apparait');
+      observateur.observe(el);
     });
   }
 
