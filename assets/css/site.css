@@ -1,6 +1,6 @@
 /* Decrocho — feuille de style
    Mise en page : « carnet de chantier ». Bandes pleine largeur, contenu sur une colonne de 1160 px,
-   un objet fort par écran (la fiche d'appel, le panneau de chantier), le reste très calme. */
+   un objet fort par écran (la fiche d'appel, la plaque jaune finale), le reste très calme. */
 
 @font-face {
   font-family: "Bricolage Grotesque";
@@ -237,13 +237,12 @@ figure, blockquote { margin: 0; }
   font-family: var(--f-mono); font-size: var(--t-xs); font-weight: 600;
   letter-spacing: .08em; text-transform: uppercase; color: var(--muted);
 }
-/* Étiquette de section : un bout de rubalise jaune et bleu nuit */
+/* Étiquette de section : un petit carré jaune (plus de rayures « chantier » : Rem, 07/11/2026, « on dirait que le site est en travaux ») */
 .eyebrow::before {
-  content: ""; width: 1.9em; height: .8em; border-radius: 2px; flex: none;
-  background: repeating-linear-gradient(-45deg, var(--signal) 0 4px, var(--night) 4px 8px);
+  content: ""; width: .7em; height: .7em; border-radius: 2px; flex: none;
+  background: var(--signal); box-shadow: 0 0 0 2px color-mix(in srgb, var(--signal) 35%, transparent);
 }
 .section--night .eyebrow { color: var(--on-night-muted); }
-.section--night .eyebrow::before { background: repeating-linear-gradient(-45deg, var(--signal) 0 4px, transparent 4px 8px); }
 
 .lead { font-size: var(--t-l); color: var(--muted); line-height: 1.55; max-width: 62ch; }
 .muted { color: var(--muted); }
@@ -581,7 +580,7 @@ figure, blockquote { margin: 0; }
 .prix-bandeau .chiffre small { font-size: .38em; font-weight: 600; letter-spacing: -.01em; color: var(--muted); margin-left: .3em; }
 @media (max-width: 700px) { .prix-bandeau { grid-template-columns: minmax(0, 1fr); } }
 
-/* Panneau de chantier */
+/* Encadré final : la plaque jaune (plus de vis ni de « panneau de chantier » : Rem, 07/11/2026, « on dirait que le site est en travaux ») */
 .panneau {
   position: relative;
   background: var(--signal); color: var(--on-signal);
@@ -590,15 +589,6 @@ figure, blockquote { margin: 0; }
   box-shadow: 0 0 0 6px var(--night), var(--shadow-lift);
   display: grid; gap: 22px;
 }
-.panneau::before, .panneau::after {
-  content: ""; position: absolute; width: 14px; height: 14px; border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, #fff8 0 20%, transparent 21%), #8C6A0C;
-  box-shadow: calc(100% + 0px) 0 0 0 transparent;
-}
-.panneau::before { left: 14px; top: 14px; }
-.panneau::after { right: 14px; top: 14px; }
-.panneau .vis-bas { position: absolute; inset: auto 14px 14px; display: flex; justify-content: space-between; pointer-events: none; }
-.panneau .vis-bas i { width: 14px; height: 14px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #fff8 0 20%, transparent 21%), #8C6A0C; }
 .panneau-titre { font-family: var(--f-mono); font-weight: 700; letter-spacing: .12em; text-transform: uppercase; font-size: .8rem; text-align: center; padding-bottom: 14px; border-bottom: 3px solid var(--on-signal); }
 .panneau h2 { color: var(--on-signal); text-align: center; font-size: clamp(1.9rem, 1.4rem + 2.2vw, 3.1rem); }
 .panneau dl { display: grid; grid-template-columns: minmax(150px, max-content) minmax(0, 1fr); margin: 0; border-top: 2px solid var(--on-signal); }
@@ -977,12 +967,6 @@ html:not(.js) .onglets { display: none; }
 .fin-page p { color: var(--on-night-muted); margin-top: 8px; }
 .fin-page .btn--line { --btn-fg: var(--on-night); box-shadow: inset 0 0 0 2px var(--night-3); }
 .fin-page .btn--line:hover { box-shadow: inset 0 0 0 2px var(--on-night); }
-/* Pages intérieures : un liseré de rubalise sous le titre */
-.page-hero { position: relative; }
-.page-hero::after {
-  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 8px;
-  background: repeating-linear-gradient(-45deg, var(--signal) 0 12px, var(--night) 12px 24px);
-}
 .offre { position: relative; }
 
 /* Couleurs des illustrations (suivent le mode clair ou sombre) */
@@ -997,7 +981,7 @@ html:not(.js) .onglets { display: none; }
    Accueil v2 (07/11/2026) : « le chantier ». Moins de cartes à icônes,
    plus d'objets du métier : écran de l'artisan, bons, panneau.
    v3 (même jour, remarques de Rem) : moins d'éléments à la fois, rien de penché,
-   une seule bande jaune (la démo) avant le panneau final.
+   une seule bande jaune (la démo) avant le panneau final, aucune rayure.
    ===================================================================== */
 
 /* Boutons */
@@ -1099,7 +1083,7 @@ html:not(.js) .onglets { display: none; }
 /* Démo : bande jaune, numéro sur une plaque */
 .demo-zone { background: var(--signal); color: var(--on-signal); }
 .demo-zone h2, .demo-zone .lead, .demo-zone .eyebrow, .demo-zone .lead strong { color: var(--on-signal); }
-.demo-zone .eyebrow::before { background: repeating-linear-gradient(-45deg, var(--on-signal) 0 4px, transparent 4px 8px); }
+.demo-zone .eyebrow::before { background: var(--on-signal); box-shadow: none; }
 .demo-tete { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: clamp(24px, 4vw, 56px); align-items: center; margin-bottom: clamp(28px, 4vw, 44px); }
 .demo-tete .section-head { margin-bottom: 0; }
 .demo-zone .demo-numero {
@@ -1190,6 +1174,62 @@ html:not(.js) .onglets { display: none; }
   .barre-mobile .btn--line { --btn-bg: var(--surface); }
   body:has(.barre-mobile) .site-footer { padding-bottom: 72px; }
 }
+
+/* ---------- Petites animations (Rem, 07/11/2026 : « des petites animations stylées, pas des trucs de fou ») ---------- */
+/* Boutons : ils se soulèvent, un reflet passe, la flèche avance, le téléphone sonne, ils s'enfoncent au clic */
+.btn { position: relative; overflow: hidden; isolation: isolate; transition: transform .2s cubic-bezier(.2, .8, .3, 1), box-shadow .2s ease, background-color .2s ease; }
+.btn:hover { transform: translateY(-2px); }
+.btn:active { transform: translateY(1px) scale(.98); transition-duration: .08s; }
+.btn:not(.btn--line):not(.btn--line-night)::after {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, .32) 50%, transparent 65%);
+  transform: translateX(-120%);
+}
+.btn:not(.btn--line):not(.btn--line-night):hover::after { transform: translateX(120%); transition: transform .7s cubic-bezier(.2, .8, .3, 1); }
+.btn .i-arrow { transition: transform .25s cubic-bezier(.2, .8, .3, 1); }
+.btn:hover .i-arrow, .btn:focus-visible .i-arrow { transform: translateX(4px); }
+.btn:hover .i-phone, .nav-demo:hover .i-phone { animation: sonne .65s ease; transform-origin: 50% 60%; }
+@keyframes sonne { 0%, 100% { transform: rotate(0); } 15% { transform: rotate(-16deg); } 30% { transform: rotate(14deg); } 45% { transform: rotate(-10deg); } 60% { transform: rotate(7deg); } 75% { transform: rotate(-3deg); } }
+.link-arrow::after { transition: transform .25s cubic-bezier(.2, .8, .3, 1); }
+.link-arrow:hover::after { transform: translateX(5px); }
+
+/* Menu : un trait jaune glisse sous le lien survolé */
+.nav > a::before {
+  content: ""; position: absolute; left: 12px; right: 12px; bottom: 4px; height: 3px; border-radius: 2px;
+  background: var(--signal); transform: scaleX(0); transform-origin: left; transition: transform .25s cubic-bezier(.2, .8, .3, 1);
+}
+.nav > a:hover::before { transform: scaleX(1); }
+.nav > a[aria-current="page"]::before { display: none; }
+
+/* Cartes : elles se soulèvent un peu au survol */
+.ticket, .scenario, .offre { transition: transform .25s cubic-bezier(.2, .8, .3, 1), box-shadow .25s ease; }
+@media (hover: hover) {
+  .ticket:hover, .scenario:hover, .offre:hover { transform: translateY(-4px); box-shadow: var(--shadow-lift); }
+}
+
+/* Téléphone de l'accueil : une fois les fiches arrivées, « Confirmer » attire l'œil deux fois */
+.anime-notifs .notif-liens span:first-child { animation: confirme 1.4s ease-out 3s 2; }
+@keyframes confirme { 0% { box-shadow: 0 0 0 0 rgba(35, 64, 168, .55); } 70%, 100% { box-shadow: 0 0 0 9px rgba(35, 64, 168, 0); } }
+
+/* Calculateur : le montant rebondit quand il change */
+[data-pertes-mois] { display: inline-block; transform-origin: left center; }
+[data-pertes-mois].maj { animation: rebond .35s cubic-bezier(.2, .8, .3, 1); }
+@keyframes rebond { 40% { transform: scale(1.06); } }
+
+/* Questions : le « + » tourne, la réponse glisse */
+details.q summary::after { transition: transform .3s cubic-bezier(.2, .8, .3, 1), background-color .2s ease; }
+details.q[open] summary::after { transform: rotate(180deg); }
+details.q[open] .r { animation: deplie .35s cubic-bezier(.2, .8, .3, 1); }
+@keyframes deplie { from { opacity: 0; transform: translateY(-6px); } }
+
+/* Les blocs apparaissent quand on arrive dessus (classes posées par site.js, jamais sans JavaScript) */
+.apparait { opacity: 0; transform: translateY(18px); }
+.apparait.vu { opacity: 1; transform: none; transition: opacity .6s cubic-bezier(.2, .8, .3, 1), transform .6s cubic-bezier(.2, .8, .3, 1); }
+@media print { .apparait { opacity: 1 !important; transform: none !important; } }
+
+/* Barre du bas sur téléphone : elle monte à l'arrivée */
+@media (max-width: 760px) { .barre-mobile { animation: monte .45s cubic-bezier(.2, .8, .3, 1) .6s both; } }
+@keyframes monte { from { transform: translateY(100%); } }
 
 /* ---------- Mouvement ---------- */
 @media (prefers-reduced-motion: reduce) {
