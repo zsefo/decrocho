@@ -301,6 +301,7 @@ figure, blockquote { margin: 0; }
 }
 .link-arrow::after { content: "→"; transition: transform .15s ease; }
 .link-arrow:hover::after { transform: translateX(3px); }
+.section--night .link-arrow { color: var(--signal); }
 
 /* ---------- En-tête ---------- */
 .site-header {
@@ -550,14 +551,16 @@ figure, blockquote { margin: 0; }
   background: linear-gradient(180deg, var(--accent-soft), var(--surface));
   border: 1px solid var(--line);
   aspect-ratio: 5 / 4; max-width: 100%;
+  container-type: inline-size;
 }
-.local-visuel svg { position: absolute; inset: auto 0 0 0; width: 100%; height: auto; }
+.local-visuel > svg { position: absolute; inset: auto 0 0 0; width: 100%; height: auto; }
 .local-pin {
-  position: absolute; left: 50%; top: 12%; transform: translateX(-50%);
-  display: grid; justify-items: center; gap: 6px; text-align: center;
+  position: absolute; left: 50%; top: 9%; transform: translateX(-50%);
+  display: grid; justify-items: center; gap: 4px; text-align: center;
 }
-.local-pin b { font-family: var(--f-display); font-size: clamp(1.15rem, 1rem + .8vw, 1.5rem); letter-spacing: -.02em; white-space: nowrap; line-height: 1.2; }
-.local-pin span { font-family: var(--f-mono); font-size: .74rem; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); }
+/* tailles liées à la largeur du cadre (cqw) : le repère reste au-dessus de la croix, même dans un petit cadre */
+.local-pin b { font-family: var(--f-display); font-size: 1.15rem; font-size: clamp(1rem, 5cqw, 1.5rem); letter-spacing: -.02em; white-space: nowrap; line-height: 1.2; }
+.local-pin span { font-family: var(--f-mono); font-size: .7rem; font-size: clamp(.62rem, 2.4cqw, .74rem); letter-spacing: .07em; text-transform: uppercase; color: var(--muted); }
 .etapes-locales { list-style: none; display: grid; gap: 18px; counter-reset: loc; }
 .etapes-locales li { counter-increment: loc; display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 14px; align-items: start; }
 .etapes-locales li::before {
@@ -799,10 +802,9 @@ td code { font-family: var(--f-mono); font-size: .9em; background: var(--surface
 @media (max-width: 820px) { .calcul { grid-template-columns: minmax(0, 1fr); } }
 
 .calcul-note { font-size: var(--t-xs); }
-.pertes-bandeau .chiffre small { margin-left: .35em; }
-.pertes-bandeau > div { display: grid; gap: 12px; }
-.pertes-sources { font-size: var(--t-xs); color: var(--muted); max-width: 80ch; }
-.pertes-titre { margin-top: clamp(40px, 5vw, 64px); }
+.calcul-montant small { display: block; margin-top: 8px; font-family: var(--f-text); font-size: 1rem; font-weight: 600; letter-spacing: 0; color: var(--on-night-muted); }
+.calcul-formule { font-family: var(--f-mono); font-size: var(--t-s); padding-top: 14px; border-top: 1px solid rgba(255, 255, 255, .12); font-variant-numeric: tabular-nums; }
+.calcul-resultat .calcul-formule span { color: var(--on-night); font-weight: 700; }
 
 /* Démo et accueil */
 .hero-demo { display: flex; align-items: center; gap: 8px; font-weight: 600; color: var(--muted); }
@@ -955,7 +957,7 @@ html:not(.js) .onglets { display: none; }
 .sms-liens span + span { background: transparent; color: var(--text); box-shadow: inset 0 0 0 2px var(--line); }
 
 /* Repère sur la carte */
-.local-pin svg { width: 44px; height: 44px; position: static; filter: drop-shadow(0 6px 8px rgba(15, 27, 61, .25)); }
+.local-pin svg { width: 36px; height: 36px; width: clamp(28px, 10cqw, 44px); height: clamp(28px, 10cqw, 44px); position: static; filter: drop-shadow(0 6px 8px rgba(15, 27, 61, .25)); }
 
 /* Petites étiquettes */
 .badge {
@@ -993,7 +995,9 @@ html:not(.js) .onglets { display: none; }
 
 /* =====================================================================
    Accueil v2 (07/11/2026) : « le chantier ». Moins de cartes à icônes,
-   plus d'objets du métier : écran de l'artisan, rubalise, bons, panneau.
+   plus d'objets du métier : écran de l'artisan, bons, panneau.
+   v3 (même jour, remarques de Rem) : moins d'éléments à la fois, rien de penché,
+   une seule bande jaune (la démo) avant le panneau final.
    ===================================================================== */
 
 /* Boutons */
@@ -1018,22 +1022,10 @@ html:not(.js) .onglets { display: none; }
 .hero-points li { color: var(--text); }
 
 .hero-visuel { position: relative; min-width: 0; display: grid; justify-items: center; padding: 28px 0 40px; }
-.hero-plaque {
-  position: absolute; inset: 0 2% 9% 10%; border-radius: 12px;
-  background:
-    repeating-linear-gradient(-45deg, var(--night) 0 14px, var(--signal) 14px 28px) bottom / 100% 26px no-repeat,
-    var(--signal);
-  box-shadow: 0 0 0 5px var(--night), var(--shadow-lift);
-}
-.hero-plaque span {
-  position: absolute; left: 20px; top: 16px; max-width: 40%;
-  font-family: var(--f-mono); font-weight: 700; font-size: .72rem; letter-spacing: .1em; text-transform: uppercase;
-  color: var(--on-signal); line-height: 1.4;
-}
+.hero-plaque { position: absolute; inset: 9% 0 15% 0; border-radius: 28px; background: var(--signal); }
 .telephone {
   position: relative; width: min(318px, 86%); padding: 11px; border-radius: 46px;
   background: #0B132E; box-shadow: 0 0 0 2px #2A3866, 0 40px 70px -30px rgba(10, 16, 38, .7);
-  transform: rotate(3deg); margin-left: 12%;
 }
 .telephone-ecran {
   border-radius: 36px; padding: 30px 12px 22px; min-height: 500px;
@@ -1066,43 +1058,17 @@ html:not(.js) .onglets { display: none; }
 .anime-notifs .notif:nth-child(2) { animation-delay: 1.3s; }
 .anime-notifs .notif:nth-child(3) { animation-delay: 2.1s; }
 @keyframes notif { from { opacity: 0; transform: translateY(-14px) scale(.96); } }
-.tampon--hero {
-  right: auto; left: 0; top: auto; bottom: 20%; z-index: 2; text-align: center; line-height: 1.05;
-  font-size: 1.25rem; padding: 6px 12px; animation-delay: 2.8s;
-  mix-blend-mode: normal; opacity: 1; background: var(--signal); color: #A8410A;
-}
-.hero-visuel .scene-note { right: 2%; bottom: 0; }
+.hero-visuel .scene-note { position: static; margin-top: 14px; text-align: center; }
 @media (max-width: 900px) {
   .hero-visuel { max-width: 460px; width: 100%; margin-inline: auto; }
 }
 @media (max-width: 480px) {
-  .telephone { margin-left: 8%; }
   .telephone-ecran { min-height: 0; }
-  .hero-plaque span { max-width: 34%; font-size: .64rem; }
-  .tampon--hero { font-size: 1rem; left: auto; right: 0; top: 6px; bottom: auto; }
-  .hero-plaque { bottom: 96px; }
-  .hero-visuel .scene-note { position: static; margin-top: 18px; text-align: center; }
 }
-
-/* Rubalise qui défile sous le héros */
-.rubalise-cadre { overflow: hidden; padding-block: 16px; margin-block: -16px; position: relative; z-index: 1; }
-.rubalise {
-  width: calc(100% + 40px); margin: 0 -20px; padding-block: 9px;
-  background: repeating-linear-gradient(-45deg, var(--signal) 0 16px, var(--night) 16px 32px);
-  transform: rotate(-1.2deg); position: relative; z-index: 1;
-}
-.rubalise-piste { display: flex; overflow: hidden; background: var(--night); }
-.rubalise-mots { flex: none; display: flex; animation: defile 48s linear infinite; }
-.rubalise-mots span {
-  padding: 13px 0; font-family: var(--f-mono); font-weight: 700; font-size: .9rem; letter-spacing: .1em; text-transform: uppercase;
-  color: var(--signal); white-space: nowrap;
-}
-.rubalise-mots span::after { content: "✱"; margin-inline: 22px; color: #fff; opacity: .55; }
-@keyframes defile { to { transform: translateX(-100%); } }
 
 /* Avant / après */
 .duel { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
-.duel-carte { border-radius: var(--r-l); padding: clamp(20px, 2.6vw, 30px); display: grid; gap: 16px; align-content: start; min-width: 0; }
+.duel-carte { border-radius: var(--r-l); padding: clamp(20px, 2.6vw, 30px); display: flex; flex-direction: column; gap: 16px; min-width: 0; }
 .duel-titre {
   display: flex; align-items: center; gap: 10px;
   font-family: var(--f-mono); font-weight: 700; font-size: .78rem; letter-spacing: .1em; text-transform: uppercase;
@@ -1124,38 +1090,24 @@ html:not(.js) .onglets { display: none; }
   padding: 11px 12px; border-radius: 12px; background: rgba(255, 255, 255, .06); font-size: var(--t-s); line-height: 1.45;
 }
 .fiches-courtes .niv { justify-self: start; margin-top: 2px; }
+.duel-pied { margin-top: auto; padding-top: 14px; border-top: 1px dashed var(--line); font-weight: 600; color: var(--text); }
+.duel-carte--avec .duel-pied { border-top-color: rgba(255, 255, 255, .16); color: var(--on-night); }
 @media (max-width: 860px) { .duel { grid-template-columns: minmax(0, 1fr); } }
 
-.versus { margin-top: clamp(28px, 4vw, 44px); border-top: 2px solid var(--text); }
-.versus-ligne { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1fr) minmax(0, 1.2fr); gap: 20px; padding: 16px 0; border-bottom: 1px solid var(--line); align-items: start; }
-.versus-ligne--tete { padding: 12px 0; font-family: var(--f-mono); font-size: .74rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
-.versus-ligne--tete p:last-child { color: var(--accent); }
-.versus-critere { font-family: var(--f-display); font-weight: 700; font-size: 1.12rem; letter-spacing: -.01em; line-height: 1.3; }
-.versus-sans, .versus-avec { display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 10px; font-size: var(--t-s); }
-.versus-sans { color: var(--muted); }
-.versus-avec { font-weight: 600; }
-.versus .regle-ico { width: 24px; height: 24px; border-radius: 7px; }
-.versus .regle-ico svg { width: 15px; height: 15px; }
-.versus .regle-ico--non { background: var(--danger-soft); color: var(--danger); }
-.versus .regle-ico--oui { background: var(--calme-soft); color: var(--calme); }
-@media (max-width: 760px) {
-  .versus-ligne { grid-template-columns: minmax(0, 1fr); gap: 8px; }
-  .versus-ligne--tete { display: none; }
-}
 .scene-note--bloc { position: static; display: block; margin-top: 14px; }
 
 /* Démo : bande jaune, numéro sur une plaque */
 .demo-zone { background: var(--signal); color: var(--on-signal); }
 .demo-zone h2, .demo-zone .lead, .demo-zone .eyebrow, .demo-zone .lead strong { color: var(--on-signal); }
 .demo-zone .eyebrow::before { background: repeating-linear-gradient(-45deg, var(--on-signal) 0 4px, transparent 4px 8px); }
-.demo-tete { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, .75fr); gap: clamp(24px, 4vw, 56px); align-items: center; margin-bottom: clamp(28px, 4vw, 44px); }
+.demo-tete { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: clamp(24px, 4vw, 56px); align-items: center; margin-bottom: clamp(28px, 4vw, 44px); }
 .demo-tete .section-head { margin-bottom: 0; }
 .demo-zone .demo-numero {
   background: #FFFDF6; color: #0F1B3D; padding: 22px 24px; border-radius: 14px;
   border: 3px solid #0F1B3D; box-shadow: 8px 8px 0 #0F1B3D;
 }
 .demo-zone .demo-numero small { color: #4E5874; font-size: var(--t-xs); }
-.demo-zone .demo-numero .montant { font-family: var(--f-mono); font-weight: 800; font-size: clamp(2rem, 1.5rem + 2vw, 2.9rem); letter-spacing: -.02em; line-height: 1.05; }
+.demo-zone .demo-numero .montant { font-family: var(--f-mono); font-weight: 800; font-size: clamp(1.6rem, 1rem + 2.6vw, 2.7rem); letter-spacing: -.02em; line-height: 1.05; }
 .demo-zone .demo-numero .montant a { color: #0F1B3D; text-decoration: none; }
 .demo-zone .btn--night { --btn-bg: #0F1B3D; --btn-fg: #F2F4FA; }
 .scenarios { list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
@@ -1165,9 +1117,6 @@ html:not(.js) .onglets { display: none; }
   -webkit-mask: radial-gradient(circle 6px at 10px 0, transparent 98%, #000) -10px 0 / 20px 100% repeat-x;
   mask: radial-gradient(circle 6px at 10px 0, transparent 98%, #000) -10px 0 / 20px 100% repeat-x;
 }
-.scenario:nth-child(1) { transform: rotate(-1deg); }
-.scenario:nth-child(2) { transform: rotate(.6deg); }
-.scenario:nth-child(3) { transform: rotate(-.4deg); }
 .scenario small { display: block; font-family: var(--f-mono); font-size: .68rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #5E6681; margin-bottom: 4px; }
 .scenario-num { font-family: var(--f-mono); font-weight: 700; font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; padding-bottom: 10px; border-bottom: 1.5px dashed #E4DFC9; }
 .scenario-dire { font-family: var(--f-display); font-weight: 700; font-size: 1.22rem; letter-spacing: -.01em; line-height: 1.25; }
@@ -1197,10 +1146,10 @@ html:not(.js) .onglets { display: none; }
 .ticket--accent .ticket-prix small { color: var(--on-night-muted); }
 .ticket--accent ul { border-top-color: rgba(255, 255, 255, .16); }
 .ticket--accent li svg { color: var(--signal); }
-.tampon--offre {
-  right: 18px; top: -16px; font-size: 1rem; padding: 3px 12px;
-  color: var(--on-signal); background: var(--signal); border-color: var(--night); mix-blend-mode: normal; opacity: 1;
-  transform: rotate(4deg); animation: none;
+.badge-conseil {
+  position: absolute; right: 20px; top: -13px; z-index: 1;
+  font-family: var(--f-mono); font-weight: 700; font-size: .72rem; letter-spacing: .08em; text-transform: uppercase;
+  padding: 5px 12px; border-radius: 999px; background: var(--signal); color: var(--on-signal);
 }
 @media (max-width: 960px) { .tickets { grid-template-columns: minmax(0, 1fr); align-items: stretch; } .ticket--accent { order: -1; } }
 
@@ -1211,23 +1160,12 @@ html:not(.js) .onglets { display: none; }
 .garanties li { display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 10px; align-items: start; }
 .garanties svg { width: 24px; height: 24px; color: var(--accent); }
 .garanties b { display: block; font-family: var(--f-display); font-weight: 700; letter-spacing: -.01em; line-height: 1.25; }
-.garanties span { font-size: var(--t-xs); color: var(--muted); }
+.garanties span { display: block; margin-top: 2px; font-size: var(--t-xs); line-height: 1.45; color: var(--muted); }
 @media (max-width: 960px) { .garanties { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 520px) { .garanties { grid-template-columns: minmax(0, 1fr); } }
 .offres-note .link-arrow { margin-left: 6px; font-size: var(--t-s); }
 
-/* Carte de visite et équipe locale */
-.carte-visite {
-  position: absolute; left: 50%; top: 9%; width: min(300px, 70%); aspect-ratio: 85 / 55;
-  transform: translateX(-50%) rotate(-4deg);
-  background: #fff; color: #0F1B3D; border-radius: 6px; padding: 14px 16px;
-  box-shadow: 0 22px 40px -20px rgba(15, 27, 61, .55); display: grid; align-content: space-between;
-}
-.carte-visite-marque { display: flex; align-items: center; gap: 7px; font-family: var(--f-display); font-weight: 800; font-size: 1.05rem; letter-spacing: -.04em; }
-.local-visuel .carte-visite svg { position: static; width: 24px; height: 24px; inset: auto; }
-.carte-visite-nom { font-family: var(--f-display); font-weight: 700; font-size: 1.15rem; letter-spacing: -.02em; line-height: 1.1; }
-.carte-visite-nom small { display: block; font-family: var(--f-mono); font-size: .62rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: #4E5874; margin-top: 3px; }
-.carte-visite-coord { font-family: var(--f-mono); font-size: .66rem; line-height: 1.5; color: #2B3554; }
+/* Équipe locale (suite) */
 .note-places { display: flex; gap: 10px; align-items: flex-start; margin-top: 26px; font-size: var(--t-s); color: var(--muted); }
 .note-places svg { width: 20px; height: 20px; flex: none; margin-top: 2px; color: var(--accent); }
 
